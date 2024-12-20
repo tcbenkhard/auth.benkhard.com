@@ -36,6 +36,6 @@ jobs:
           aws-secret-access-key: ${{secrets.aws_secret_access_key}}
       - run: npm i aws-cdk -g
       - run: npm ci
-      - run: cdk deploy
+      - run: cdk deploy --require-approval never
       
         
