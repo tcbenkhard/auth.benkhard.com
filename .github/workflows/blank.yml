@@ -29,8 +29,8 @@ jobs:
           node-version: 22
       - uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{secrets.aws-access-key-id}}
-          aws-secret-access-key: ${{secrets.aws-secret-access-key}}
+          aws-access-key-id: ${{secrets.aws_access_key_id}}
+          aws-secret-access-key: ${{secrets.aws_secret_access_key}}
       - run: npm i aws-cdk -g
       - run: npm ci
       - run: cdk deploy
