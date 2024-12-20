@@ -1,16 +1,25 @@
-import * as cdk from 'aws-cdk-lib';
-import { Construct } from 'constructs';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
+import {b_cdk, b_lambda, b_dynamodb} from '@tcbenkhard/benkhard-cdk'
+import {Construct} from 'constructs';
+import {aws_dynamodb} from "aws-cdk-lib";
 
-export class AuthBenkhardComStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
-    super(scope, id, props);
+export class AuthBenkhardComStack extends b_cdk.Stack {
+  constructor(scope: Construct, id: string) {
+    super(scope, id, 'auth-benkhard-com');
 
-    // The code that defines your stack goes here
+    const userTable = new b_dynamodb.Table(this, 'UserTable', {
+      tableName: 'users',
+      partitionKey: {
+        name: 'email',
+        type: aws_dynamodb.AttributeType.STRING
+      }
+    })
 
-    // example resource
-    // const queue = new sqs.Queue(this, 'AuthBenkhardComQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
+    const registration_handler = new b_lambda.NodejsFunction(this, 'RegistrationHandler', {
+      entry: 'src/registration-handler.ts',
+      handler: 'handler',
+      environment: {
+        'USER_TABLE_NAME': userTable.tableName
+      }
+    })
   }
 }
