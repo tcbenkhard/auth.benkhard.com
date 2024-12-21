@@ -4,6 +4,8 @@ import {pbkdf2Sync} from "pbkdf2";
 import {User} from "../model/user";
 import {RegistrationRequest} from "../registration-handler";
 import {ServerError} from "@tcbenkhard/aws-utils";
+import {LoginRequest} from "../login-handler";
+import * as jwt from "jsonwebtoken";
 
 export class AuthService {
     private userRepository: UserRepository
@@ -25,5 +27,22 @@ export class AuthService {
         }
         await this.userRepository.save(createdUser)
         return createdUser
+    }
+
+    generateToken = async (request: LoginRequest) => {
+        const unauthorizedError = ServerError.unauthorized("INVALID_CREDENTIALS", "Username or password is incorrect")
+        const existingUser = await this.userRepository.getByEmail(request.email)
+        if(!existingUser) throw unauthorizedError
+        const secret = pbkdf2Sync(request.password, existingUser.salt, 1, 32, 'SHA512').toString('base64')
+        if(existingUser.secret !== secret) throw unauthorizedError
+        const accessToken = jwt.sign({}, 'secret', {
+            expiresIn: "1d",
+            subject: existingUser.email,
+            algorithm: "RS256"
+        })
+
+        return {
+            "accessToken": accessToken,
+        }
     }
 }

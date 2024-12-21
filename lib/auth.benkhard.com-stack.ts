@@ -14,9 +14,18 @@ export class AuthBenkhardComStack extends b_cdk.Stack {
       }
     })
 
-    const registration_handler = new b_lambda.NodejsFunction(this, 'RegistrationHandler', {
+    const registrationHandler = new b_lambda.NodejsFunction(this, 'RegistrationHandler', {
       functionName: 'registration-handler',
       entry: 'src/registration-handler.ts',
+      handler: 'handler',
+      environment: {
+        'USER_TABLE_NAME': userTable.tableName
+      }
+    })
+
+    const loginHandler = new b_lambda.NodejsFunction(this, 'LoginHandler', {
+      functionName: 'login-handler',
+      entry: 'src/login-handler.ts',
       handler: 'handler',
       environment: {
         'USER_TABLE_NAME': userTable.tableName
