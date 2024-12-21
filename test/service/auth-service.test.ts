@@ -36,4 +36,25 @@ describe('AuthService', () => {
             name: 'Tester Test'
         })
         verify(mockedRepository.save(anything())).called()})
+
+    it('should return an access token when the credentials are correct', async () => {
+        const mockedRepository: UserRepository = mock(UserRepository);
+        const repository = instance(mockedRepository)
+        const service = new AuthService(repository)
+
+        when(mockedRepository.getByEmail(anything())).thenResolve({
+            email: 'test@test.com',
+            name: 'Tester Test',
+            secret: 'KxjO2QvmdIeupjLwRk7kya5y/BuJOqswNa14v71oMiU=',
+            salt: 'complexsalt',
+        })
+
+        const accessToken = await service.generateToken({
+            email: 'test@test.com',
+            password: '123'
+        })
+
+        expect(accessToken).toHaveProperty('accessToken')
+        console.log(accessToken)
+    })
 })
