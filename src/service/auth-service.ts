@@ -35,7 +35,16 @@ export class AuthService {
         if(!existingUser) throw unauthorizedError
         const secret = pbkdf2Sync(request.password, existingUser.salt, 1, 32, 'SHA512').toString('base64')
         if(existingUser.secret !== secret) throw unauthorizedError
-        const accessToken = jwt.sign({}, 'secret', {
+        // THIS IS A RANDOMLY GENERATED PRIVATE KEY, TO BE REPLACED WITH PROPER SECRET MANAGEMENT
+        const privateKey =
+            `-----BEGIN OPENSSH PRIVATE KEY-----
+            b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+            QyNTUxOQAAACAVXRfyCDioEO05FgpvtWIyD4xbiI5XxAvcpeoXDGnbJgAAAJitAisPrQIr
+            DwAAAAtzc2gtZWQyNTUxOQAAACAVXRfyCDioEO05FgpvtWIyD4xbiI5XxAvcpeoXDGnbJg
+            AAAECSjeVLDK5jW9M91DR23lEpJrDkm93hgdskBuoE8HVsMRVdF/IIOKgQ7TkWCm+1YjIP
+            jFuIjlfEC9yl6hcMadsmAAAAFXRjYmVuQERFU0tUT1AtMFIwU1BMVA==
+            -----END OPENSSH PRIVATE KEY-----`
+        const accessToken = jwt.sign({}, privateKey, {
             expiresIn: "1d",
             subject: existingUser.email,
             algorithm: "RS256"
