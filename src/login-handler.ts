@@ -2,7 +2,7 @@ import {DocumentClient} from "aws-sdk/clients/dynamodb";
 import {UserRepository} from "./repository/user-repository";
 import {AuthService} from "./service/auth-service";
 import {z} from "zod";
-import {ServerError} from "@tcbenkhard/aws-utils";
+import {ServerError, wrapHandler} from "@tcbenkhard/aws-utils";
 import {APIGatewayProxyEvent, Context} from "aws-lambda";
 
 const dynamodb = new DocumentClient()
@@ -31,3 +31,5 @@ const loginHandler = (event: APIGatewayProxyEvent, context: Context) => {
     })
     return authService.generateToken(request)
 }
+
+export const handler = wrapHandler(loginHandler, 200)
