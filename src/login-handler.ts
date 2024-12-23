@@ -26,3 +26,5 @@ export const buildLoginHandler = (authService: AuthService) => (event: APIGatewa
     })
     return authService.generateToken(request)
 }
+
+export const loginHandler = wrapHandler(buildLoginHandler(AuthService.build()), 200)
