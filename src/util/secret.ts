@@ -12,7 +12,7 @@ export class SecretUtils {
     public static async getSecretValue(secretId: string) {
         const client = await this.getSecretClient()
         const publicKey = await client.send(new GetSecretValueCommand({
-            SecretId: getEnv(secretId)
+            SecretId: secretId
         }))
         if (publicKey.SecretString === undefined) throw new ServerError(500, "UNEXPECTED_ERROR", "Something unexpected has happened.")
         return publicKey.SecretString

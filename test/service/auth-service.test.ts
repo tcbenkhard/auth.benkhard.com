@@ -1,10 +1,10 @@
 import {AuthService} from "../../src/service/auth-service";
 import {UserRepository} from "../../src/repository/user-repository";
 import {anything, instance, mock, spy, verify, when} from "ts-mockito";
-import {ServerError} from "@tcbenkhard/aws-utils";
-import {mockCertificate, mockPrivateKey} from "../mockPrivateKey";
-import {SecretUtils} from "../../src/util/secret";
 import * as utils from "@tcbenkhard/aws-utils";
+import {ServerError} from "@tcbenkhard/aws-utils";
+import {mockPrivateKey} from "../mockPrivateKey";
+import {SecretUtils} from "../../src/util/secret";
 
 describe('AuthService', () => {
     it('should raise when a username is already registered', async () => {

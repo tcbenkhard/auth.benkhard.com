@@ -3,8 +3,6 @@ import {z} from "zod";
 import {ServerError, wrapHandler} from "@tcbenkhard/aws-utils";
 import {APIGatewayProxyEvent, Context} from "aws-lambda";
 
-const authService = AuthService.build()
-
 const LoginRequestSchema = z.object({
     email: z.string().email(),
     password: z.string(),
@@ -14,7 +12,7 @@ const decode = (str: string):string => Buffer.from(str, 'base64').toString('bina
 
 export type LoginRequest = z.infer<typeof LoginRequestSchema>
 
-const loginHandler = (event: APIGatewayProxyEvent, context: Context) => {
+export const buildLoginHandler = (authService: AuthService) => (event: APIGatewayProxyEvent, context: Context) => {
     console.info(event)
     const authHeader = event.headers['Authorization']
     if(!authHeader) {
@@ -28,5 +26,3 @@ const loginHandler = (event: APIGatewayProxyEvent, context: Context) => {
     })
     return authService.generateToken(request)
 }
-
-export const handler = wrapHandler(loginHandler, 200)
