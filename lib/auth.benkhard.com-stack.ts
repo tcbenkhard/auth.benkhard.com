@@ -48,7 +48,8 @@ export class AuthBenkhardComStack extends b_cdk.Stack {
       functionName: 'authorizer',
       entry: 'src/authorizer.ts',
       handler: 'handler',
-      description: "Authorizer function for API Gateway"
+      description: "Authorizer function for API Gateway",
+      environment
     })
 
     const apigw = new aws_apigateway.RestApi(this, 'ApiGateway', {
