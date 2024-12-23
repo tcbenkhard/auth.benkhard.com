@@ -10,4 +10,4 @@ Content-Type: application/json
 
 ### Login
 POST https://{{ base_url }}/oauth/authorize
-Authorization: Basic tcbenkhard@gmail.com:12345678
+Authorization: Basic tcbenkhard@gmail.com 12345678

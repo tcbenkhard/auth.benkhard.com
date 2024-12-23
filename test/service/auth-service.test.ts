@@ -1,14 +1,19 @@
 import {AuthService} from "../../src/service/auth-service";
 import {UserRepository} from "../../src/repository/user-repository";
-import {anything, instance, mock, verify, when} from "ts-mockito";
+import {anything, instance, mock, spy, verify, when} from "ts-mockito";
 import {ServerError} from "@tcbenkhard/aws-utils";
 import {mockCertificate, mockPrivateKey} from "../mockPrivateKey";
+import {SecretUtils} from "../../src/util/secret";
+import * as utils from "@tcbenkhard/aws-utils";
 
 describe('AuthService', () => {
     it('should raise when a username is already registered', async () => {
         const mockedRepository: UserRepository = mock(UserRepository);
         const repository = instance(mockedRepository)
-        const service = new AuthService(repository, mockPrivateKey, "")
+        const mockedSecretUtils: SecretUtils = spy<SecretUtils>(SecretUtils)
+        // @ts-ignore
+        when(mockedSecretUtils.getSecretValue(anything())).thenResolve(mockPrivateKey)
+        const service = new AuthService(repository)
 
         when(mockedRepository.getByEmail(anything())).thenResolve({
             email: 'test@test.com',
@@ -27,7 +32,7 @@ describe('AuthService', () => {
     it('should save the user when the emailaddress is not in use', async () => {
         const mockedRepository: UserRepository = mock(UserRepository);
         const repository = instance(mockedRepository)
-        const service = new AuthService(repository, mockPrivateKey, "")
+        const service = new AuthService(repository)
 
         when(mockedRepository.getByEmail(anything())).thenResolve(undefined);
 
@@ -41,7 +46,9 @@ describe('AuthService', () => {
     it('should return an access token when the credentials are correct', async () => {
         const mockedRepository: UserRepository = mock(UserRepository);
         const repository = instance(mockedRepository)
-        const service = new AuthService(repository, mockPrivateKey, "")
+        const service = new AuthService(repository)
+        jest.spyOn(utils, 'getEnv').mockReturnValue("MOCK")
+        SecretUtils.getSecretValue = jest.fn().mockReturnValue(mockPrivateKey)
 
         when(mockedRepository.getByEmail(anything())).thenResolve({
             email: 'test@test.com',
@@ -62,7 +69,7 @@ describe('AuthService', () => {
     it('should correctly validate a token', async () => {
         const mockedRepository: UserRepository = mock(UserRepository);
         const repository = instance(mockedRepository)
-        const service = new AuthService(repository, mockPrivateKey, mockCertificate)
+        const service = new AuthService(repository)
 
         when(mockedRepository.getByEmail(anything())).thenResolve({
             email: 'test@test.com',
