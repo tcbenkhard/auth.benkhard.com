@@ -47,7 +47,7 @@ export class AuthBenkhardComStack extends b_cdk.Stack {
     const authorizerHandler = new b_lambda.NodejsFunction(this, 'AuthorizerHandler', {
       functionName: 'authorizer',
       entry: 'src/authorizer.ts',
-      handler: 'handler',
+      handler: 'authorizer',
       description: "Authorizer function for API Gateway",
       environment
     })
