@@ -15,6 +15,7 @@ const decode = (str: string):string => Buffer.from(str, 'base64').toString('bina
 export type LoginRequest = z.infer<typeof LoginRequestSchema>
 
 const loginHandler = (event: APIGatewayProxyEvent, context: Context) => {
+    console.info(event)
     const authHeader = event.headers['Authorization']
     if(!authHeader) {
         throw ServerError.unauthorized("INVALID_CREDENTIALS", "Username or password is incorrect")
