@@ -7,7 +7,7 @@ import {APIGatewayProxyEvent, Context} from "aws-lambda";
 
 const dynamodb = new DocumentClient()
 const userRepository = new UserRepository(dynamodb)
-const authService = new AuthService(userRepository)
+const authService = new AuthService(userRepository, "", "")
 
 const LoginRequestSchema = z.object({
     email: z.string().email(),

@@ -8,7 +8,7 @@ import {parseBody} from "@tcbenkhard/aws-utils";
 
 const dynamodb = new DocumentClient()
 const userRepository = new UserRepository(dynamodb)
-const authService = new AuthService(userRepository)
+const authService = new AuthService(userRepository, "", "")
 
 export const RegistrationRequestSchema = z.object({
     email: z.string().email(),
