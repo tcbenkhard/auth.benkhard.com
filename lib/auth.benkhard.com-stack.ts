@@ -1,10 +1,13 @@
 import {b_cdk, b_lambda, b_dynamodb} from '@tcbenkhard/benkhard-cdk'
 import {Construct} from 'constructs';
-import {aws_dynamodb, aws_apigateway} from "aws-cdk-lib";
+import {aws_dynamodb, aws_apigateway, aws_secretsmanager} from "aws-cdk-lib";
 
 export class AuthBenkhardComStack extends b_cdk.Stack {
   constructor(scope: Construct, id: string) {
     super(scope, id, 'auth-benkhard-com');
+
+    const privateKey = aws_secretsmanager.Secret.fromSecretNameV2(this, 'PrivateKey', 'benkhard/auth/private-key')
+    privateKey.grantRead(this.serviceRole)
 
     const userTable = new b_dynamodb.Table(this, 'UserTable', {
       tableName: 'users',
