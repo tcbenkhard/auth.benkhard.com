@@ -6,7 +6,7 @@ export class AuthBenkhardComStack extends b_cdk.Stack {
   constructor(scope: Construct, id: string) {
     super(scope, id, 'auth-benkhard-com');
 
-    const privateKey = aws_secretsmanager.Secret.fromSecretNameV2(this, 'PrivateKey', 'benkhard/auth/private-key')
+    const privateKey = aws_secretsmanager.Secret.fromSecretNameV2(this, 'PrivateKey', '/benkhard/auth/private-key')
     privateKey.grantRead(this.serviceRole)
 
     const userTable = new b_dynamodb.Table(this, 'UserTable', {
