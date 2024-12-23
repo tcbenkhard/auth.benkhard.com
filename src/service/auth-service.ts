@@ -57,6 +57,7 @@ export class AuthService {
         const publicKey = await SecretUtils.getSecretValue(getEnv("JWT_PUBLIC_KEY_SECRET_ID"))
         try {
             jwt.verify(token, publicKey)
+            console.info("Token is valid")
         } catch (e) {
             console.error(e)
             throw ServerError.unauthorized("INVALID_TOKEN", "Token is invalid")
