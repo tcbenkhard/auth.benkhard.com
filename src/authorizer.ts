@@ -3,7 +3,7 @@ import {AuthService} from "./service/auth-service";
 
 const authService = AuthService.build()
 
-const authorizer = async (event: APIGatewayTokenAuthorizerEvent, context: Context): Promise<APIGatewayAuthorizerResult> => {
+export const authorizer = async (event: APIGatewayTokenAuthorizerEvent, context: Context): Promise<APIGatewayAuthorizerResult> => {
     try {
         authService.validateToken(event.authorizationToken)
     } catch (e) {
