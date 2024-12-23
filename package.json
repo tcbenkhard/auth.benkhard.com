@@ -12,11 +12,11 @@
   },
   "devDependencies": {
     "@tcbenkhard/benkhard-cdk": "^1.0.1",
+    "@types/aws-lambda": "^8.10.146",
     "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.7",
-    "@types/aws-lambda": "^8.10.146",
-    "@types/pbkdf2": "^3.1.2",
     "@types/node": "22.7.9",
+    "@types/pbkdf2": "^3.1.2",
     "aws-cdk": "2.173.2",
     "aws-sdk": "^2.1692.0",
     "esbuild": "^0.24.0",
@@ -27,11 +27,13 @@
     "typescript": "~5.6.3"
   },
   "dependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.716.0",
     "@tcbenkhard/aws-utils": "^1.0.3",
     "aws-cdk-lib": "2.173.2",
     "constructs": "^10.0.0",
     "jsonwebtoken": "^9.0.2",
     "pbkdf2": "^3.1.2",
+    "typescript-cacheable": "^3.0.3",
     "zod": "^3.24.1"
   }
 }

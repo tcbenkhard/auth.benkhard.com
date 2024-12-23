@@ -15,7 +15,9 @@ export class AuthBenkhardComStack extends b_cdk.Stack {
     })
 
     const environment = {
-      'USER_TABLE_NAME': userTable.tableName
+      'USER_TABLE_NAME': userTable.tableName,
+      "JWT_PUBLIC_KEY_SECRET_ID": "/benkhard/auth/public-key",
+      "JWT_PRIVATE_KEY_SECRET_ID": "/benkhard/auth/private-key"
     }
 
     const registrationHandler = new b_lambda.NodejsFunction(this, 'RegistrationHandler', {

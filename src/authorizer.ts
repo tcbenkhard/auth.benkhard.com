@@ -1,11 +1,7 @@
 import {APIGatewayAuthorizerResult, APIGatewayTokenAuthorizerEvent, Context} from "aws-lambda";
-import {DocumentClient} from "aws-sdk/clients/dynamodb";
-import {UserRepository} from "./repository/user-repository";
 import {AuthService} from "./service/auth-service";
 
-const dynamodb = new DocumentClient()
-const userRepository = new UserRepository(dynamodb)
-const authService = new AuthService(userRepository, "", "")
+const authService = AuthService.build()
 
 const authorizer = (event: APIGatewayTokenAuthorizerEvent, context: Context): APIGatewayAuthorizerResult => {
     try {

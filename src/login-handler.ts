@@ -1,13 +1,9 @@
-import {DocumentClient} from "aws-sdk/clients/dynamodb";
-import {UserRepository} from "./repository/user-repository";
 import {AuthService} from "./service/auth-service";
 import {z} from "zod";
 import {ServerError, wrapHandler} from "@tcbenkhard/aws-utils";
 import {APIGatewayProxyEvent, Context} from "aws-lambda";
 
-const dynamodb = new DocumentClient()
-const userRepository = new UserRepository(dynamodb)
-const authService = new AuthService(userRepository, "", "")
+const authService = AuthService.build()
 
 const LoginRequestSchema = z.object({
     email: z.string().email(),

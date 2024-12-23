@@ -3,13 +3,21 @@ import {UserRepository} from "../repository/user-repository";
 import {pbkdf2Sync} from "pbkdf2";
 import {User} from "../model/user";
 import {RegistrationRequest} from "../registration-handler";
-import {ServerError} from "@tcbenkhard/aws-utils";
+import {getEnv, ServerError} from "@tcbenkhard/aws-utils";
 import {LoginRequest} from "../login-handler";
 import * as jwt from "jsonwebtoken";
+import {DocumentClient} from "aws-sdk/clients/dynamodb";
+import {SecretUtils} from "../util/secret";
 
 export class AuthService {
 
-    constructor(private readonly userRepository: UserRepository, private readonly privateKey: string, private readonly publicKey: string) {
+    static build = () => {
+        const dynamodb = new DocumentClient()
+        const userRepository = new UserRepository(dynamodb)
+        return new AuthService(userRepository)
+    }
+
+    constructor(private readonly userRepository: UserRepository) {
     }
 
     registerUser = async (request: RegistrationRequest): Promise<User> => {
@@ -33,9 +41,8 @@ export class AuthService {
         if (!existingUser) throw unauthorizedError
         const secret = pbkdf2Sync(request.password, existingUser.salt, 1, 32, 'SHA512').toString('base64')
         if (existingUser.secret !== secret) throw unauthorizedError
-        // THIS IS A RANDOMLY GENERATED PRIVATE KEY, TO BE REPLACED WITH PROPER SECRET MANAGEMENT
-
-        const accessToken = jwt.sign({}, this.privateKey, {
+        const privateKey = await SecretUtils.getSecretValue(getEnv("JWT_PRIVATE_KEY_SECRET_ID"))
+        const accessToken = jwt.sign({}, privateKey, {
             expiresIn: "1d",
             subject: existingUser.email,
             algorithm: "RS256"
@@ -47,8 +54,9 @@ export class AuthService {
     }
 
     validateToken = async (token: string) => {
+        const publicKey = await SecretUtils.getSecretValue(getEnv("JWT_PUBLIC_KEY_SECRET_ID"))
         try {
-            jwt.verify(token, this.publicKey)
+            jwt.verify(token, publicKey)
         } catch (e) {
             console.error(e)
             throw ServerError.unauthorized("INVALID_TOKEN", "Token is invalid")

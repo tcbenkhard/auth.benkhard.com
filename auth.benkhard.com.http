@@ -1,0 +1,13 @@
+### Register
+POST https://{{ base_url }}/register
+Content-Type: application/json
+
+{
+  "email": "tcbenkhard@gmail.com",
+  "name": "Timo Benkhard",
+  "password": "12345678"
+}
+
+### Login
+POST https://{{ base_url }}/oauth/authorize
+Authorization: Basic tcbenkhard@gmail.com:12345678
