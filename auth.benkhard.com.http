@@ -10,4 +10,5 @@ Content-Type: application/json
 
 ### Login
 POST https://{{ base_url }}/oauth/authorize
-Authorization:
+Authorization: 
+
