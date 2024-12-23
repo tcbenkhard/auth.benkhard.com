@@ -12,7 +12,7 @@ const decode = (str: string):string => Buffer.from(str, 'base64').toString('bina
 
 export type LoginRequest = z.infer<typeof LoginRequestSchema>
 
-export const buildLoginHandler = (authService: AuthService) => (event: APIGatewayProxyEvent, context: Context) => {
+export const buildLoginHandler = (authService: AuthService) => async (event: APIGatewayProxyEvent, context: Context) => {
     console.info(event)
     const authHeader = event.headers['Authorization']
     if(!authHeader) {
@@ -24,7 +24,7 @@ export const buildLoginHandler = (authService: AuthService) => (event: APIGatewa
         email: headerValues[0],
         password: headerValues[1]
     })
-    return authService.generateToken(request)
+    return await authService.generateToken(request)
 }
 
 export const handler = wrapHandler(buildLoginHandler(AuthService.build()), 200)
