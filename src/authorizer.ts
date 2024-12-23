@@ -5,7 +5,7 @@ const authService = AuthService.build()
 
 export const authorizer = async (event: APIGatewayTokenAuthorizerEvent, context: Context): Promise<APIGatewayAuthorizerResult> => {
     try {
-        authService.validateToken(event.authorizationToken)
+        await authService.validateToken(event.authorizationToken)
     } catch (e) {
         return {
             principalId: "user",
