@@ -21,6 +21,7 @@ export const buildAuthorizer = (authService: AuthService) => async (event: APIGa
         }
     } catch (e) {
         console.info("Unauthorized")
+        console.error(e)
         return {
             principalId: "user",
             policyDocument: {
