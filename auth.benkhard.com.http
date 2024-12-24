@@ -3,7 +3,7 @@ POST https://{{ base_url }}/register
 Content-Type: application/json
 
 {
-  "email": "tcbenkhard@gmail.com",
+  "email": "tcbenkhard2@gmail.com",
   "name": "Timo Benkhard",
   "password": "12345678"
 }
