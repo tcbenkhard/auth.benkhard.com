@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-secrets-manager": "^3.716.0",
-    "@tcbenkhard/aws-utils": "^1.0.3",
+    "@tcbenkhard/aws-utils": "^2.0.0",
     "aws-cdk-lib": "2.173.2",
     "constructs": "^10.0.0",
     "jsonwebtoken": "^9.0.2",

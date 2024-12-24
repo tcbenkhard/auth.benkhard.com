@@ -25,29 +25,29 @@ export class AuthBenkhardComStack extends b_cdk.Stack {
 
     const registrationHandler = new b_lambda.NodejsFunction(this, 'RegistrationHandler', {
       functionName: 'registration-handler',
-      entry: 'src/registration-handler.ts',
-      handler: 'handler',
+      entry: 'src/handlers.ts',
+      handler: 'registrationHandler',
       environment
     })
 
     const loginHandler = new b_lambda.NodejsFunction(this, 'LoginHandler', {
       functionName: 'login-handler',
-      entry: 'src/login-handler.ts',
-      handler: 'handler',
+      entry: 'src/handlers.ts',
+      handler: 'loginHandler',
       environment
     })
 
     const secureHandler = new b_lambda.NodejsFunction(this, 'SecureHandler', {
       functionName: 'secure-handler',
-      entry: 'src/secure-handler.ts',
-      handler: 'handler',
+      entry: 'src/handlers.ts',
+      handler: 'secureHandler',
       environment
     })
 
     const authorizerHandler = new b_lambda.NodejsFunction(this, 'AuthorizerHandler', {
       functionName: 'authorizer',
-      entry: 'src/authorizer.ts',
-      handler: 'authorizer',
+      entry: 'src/handlers.ts',
+      handler: 'authorizerHandler',
       description: "Authorizer function for API Gateway",
       environment
     })

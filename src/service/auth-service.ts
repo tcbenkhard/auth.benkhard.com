@@ -42,15 +42,11 @@ export class AuthService {
         const secret = pbkdf2Sync(request.password, existingUser.salt, 1, 32, 'SHA512').toString('base64')
         if (existingUser.secret !== secret) throw unauthorizedError
         const privateKey = await SecretUtils.getSecretValue(getEnv("JWT_PRIVATE_KEY_SECRET_ID"))
-        const accessToken = jwt.sign({}, privateKey, {
+        return jwt.sign({}, privateKey, {
             expiresIn: "1d",
             subject: existingUser.email,
             algorithm: "RS256"
         })
-
-        return {
-            "accessToken": accessToken,
-        }
     }
 
     validateToken = async (token: string) => {
@@ -59,6 +55,7 @@ export class AuthService {
             jwt.verify(token, publicKey)
             console.info("Token is valid")
         } catch (e) {
+            console.info("Token is invalid")
             console.error(e)
             throw ServerError.unauthorized("INVALID_TOKEN", "Token is invalid")
         }

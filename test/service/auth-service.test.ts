@@ -62,7 +62,7 @@ describe('AuthService', () => {
             password: '123'
         })
 
-        expect(accessToken).toHaveProperty('accessToken')
+        expect(accessToken).toBeDefined()
         console.log(accessToken)
     })
 
@@ -83,6 +83,6 @@ describe('AuthService', () => {
             password: '123'
         })
 
-        await service.validateToken(accessToken.accessToken)
+        await service.validateToken(accessToken)
     })
 })

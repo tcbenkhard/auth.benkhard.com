@@ -1,9 +1,8 @@
-import {APIGatewayProxyEvent, Context} from "aws-lambda";
+import {APIGatewayProxyEvent} from "aws-lambda";
 import {AuthService} from "./service/auth-service";
 import {z} from "zod";
-import {parseBody, wrapHandler} from "@tcbenkhard/aws-utils";
-
-const authService = AuthService.build()
+import {parseBody} from "@tcbenkhard/aws-utils";
+import {BaseHandler} from "@tcbenkhard/aws-utils/dist/lambda";
 
 export const RegistrationRequestSchema = z.object({
     email: z.string().email(),
@@ -13,10 +12,26 @@ export const RegistrationRequestSchema = z.object({
 
 export type RegistrationRequest = z.infer<typeof RegistrationRequestSchema>
 
-const registration_handler = async (event: APIGatewayProxyEvent, context: Context) => {
-    const request = parseBody(event.body, RegistrationRequestSchema)
-    return await authService.registerUser(request)
+interface RegistrationResponse {
+    email: string,
+    name: string,
 }
 
-export const handler = wrapHandler(registration_handler, 201)
+export class RegistrationHandler extends BaseHandler<RegistrationRequest, RegistrationResponse> {
+    constructor(private authService: AuthService) {
+        super(201);
+    }
+
+    async parseEvent(event: APIGatewayProxyEvent): Promise<RegistrationRequest> {
+        return parseBody(event.body, RegistrationRequestSchema);
+    }
+
+    async handleRequest(request: RegistrationRequest): Promise<RegistrationResponse> {
+        const user = await this.authService.registerUser(request);
+        return {
+            email: user.email,
+            name: user.name,
+        };
+    }
+}
 

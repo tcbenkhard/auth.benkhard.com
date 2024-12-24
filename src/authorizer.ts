@@ -1,9 +1,7 @@
 import {APIGatewayAuthorizerResult, APIGatewayTokenAuthorizerEvent, Context} from "aws-lambda";
 import {AuthService} from "./service/auth-service";
 
-const authService = AuthService.build()
-
-export const authorizer = async (event: APIGatewayTokenAuthorizerEvent, context: Context): Promise<APIGatewayAuthorizerResult> => {
+export const buildAuthorizer = (authService: AuthService) => async (event: APIGatewayTokenAuthorizerEvent, context: Context): Promise<APIGatewayAuthorizerResult> => {
     try {
         console.info("Authorizing", event)
         await authService.validateToken(event.authorizationToken.substring("Bearer ".length))
