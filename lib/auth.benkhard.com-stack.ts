@@ -9,7 +9,7 @@ export class AuthBenkhardComStack extends b_cdk.Stack {
     const privateKey = aws_secretsmanager.Secret.fromSecretNameV2(this, 'PrivateKey', '/benkhard/auth/private-key')
     privateKey.grantRead(this.serviceRole)
     const publicKey = aws_secretsmanager.Secret.fromSecretNameV2(this, 'PublicKey', '/benkhard/auth/public-key')
-    privateKey.grantRead(this.serviceRole)
+    publicKey.grantRead(this.serviceRole)
 
     const userTable = new b_dynamodb.Table(this, 'UserTable', {
       tableName: 'users',
