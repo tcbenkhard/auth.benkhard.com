@@ -72,7 +72,7 @@ export class AuthBenkhardComStack extends b_cdk.Stack {
 
     authorizeResource.addMethod('POST', new aws_apigateway.LambdaIntegration(loginHandler))
     registerResource.addMethod('POST', new aws_apigateway.LambdaIntegration(registrationHandler))
-    secureResource.addMethod('GET', new aws_apigateway.LambdaIntegration(loginHandler), {
+    secureResource.addMethod('GET', new aws_apigateway.LambdaIntegration(secureHandler), {
       authorizer: new aws_apigateway.TokenAuthorizer(this, 'TokenAuthorizer', {
         handler: authorizerHandler,
         identitySource: 'method.request.header.Authorization',
