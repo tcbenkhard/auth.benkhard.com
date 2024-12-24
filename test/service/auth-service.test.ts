@@ -83,8 +83,6 @@ describe('AuthService', () => {
             password: '123'
         })
 
-        const newAccessToken = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzUwMzU3NDAsImV4cCI6MTczNTEyMjE0MCwic3ViIjoidGNiZW5raGFyZEBnbWFpbC5jb20ifQ.m-mopvZu9p8HlqU8rVLz9_aqiPc0Rz-zBrbqh-dlck8ZeJdwb2hZBxx-Cpk0fSliJLe2mpRTLQc0Wq8NNpfcwLIR5UrNZmFPpYYPOE9bzE3bVtNMD-qI0-k5g7wn8l_kcYoOjt3hCAxUF_-zbBCofQ9uyHwvSBCyNvZJcZOwPsdjHJlgX6cCX_7eY2VGOfruRNPLDOtwm0hdNH18MxTDX-dkxweWEtnpGJyrUdCA5SmLIKSWN2KCm-XR0I82-HdoWDPqDAwhILaYZyBZZsP6RyeYEYkID6Vt1AyyzbuBW-oUChjcKiybePqh2erFNVgJKW3QeyKB63YTRFx58DJ8hg"
-
-        await service.validateToken(newAccessToken)
+        await service.validateToken(accessToken)
     })
 })

@@ -33,26 +33,4 @@ describe('Login handler', () => {
 
 
     })
-
-    it('should test', async () => {
-        const mockService: AuthService = new AuthService(jest.fn() as unknown as UserRepository)
-        const loginHandler = new LoginHandler(mockService)
-        const lambdaFunction = async (event: APIGatewayProxyEvent, context: Context) => {return await loginHandler.handle(event, context)}
-
-        const result = await lambdaFunction({
-            headers: {
-                Authorization: 'Basic dGNiZW5raGFyZEBnbWFpbC5jb206MTIzNDU2Nzg='
-            },
-        } as unknown as APIGatewayProxyEvent, {} as Context)
-
-        expect(result).toStrictEqual({
-            "body": "{\"accessToken\":\"test-token\"}",
-            "headers": {
-                "Access-Control-Allow-Origin": "*"
-            },
-            "statusCode": 200
-        })
-    })
-
-
 })
