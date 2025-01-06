@@ -4,7 +4,7 @@ import {AuthService} from "./service/auth-service";
 export const buildAuthorizer = (authService: AuthService) => async (event: APIGatewayTokenAuthorizerEvent, context: Context): Promise<APIGatewayAuthorizerResult> => {
     try {
         console.info("Authorizing", event)
-        await authService.validateToken(event.authorizationToken.substring("Bearer ".length))
+        const payload = await authService.validateToken(event.authorizationToken.substring("Bearer ".length))
         console.info("Authorized")
         return {
             principalId: "user",
@@ -17,6 +17,9 @@ export const buildAuthorizer = (authService: AuthService) => async (event: APIGa
                         Resource: "*"
                     }
                 ]
+            },
+            context: {
+                user: `${payload.sub}`
             }
         }
     } catch (e) {

@@ -2,7 +2,6 @@ import {LoginHandler} from "../src/login-handler";
 import {UserRepository} from "../src/repository/user-repository";
 import {AuthService} from "../src/service/auth-service";
 import {APIGatewayProxyEvent, Context} from "aws-lambda";
-import {loginHandler} from "../src/handlers"
 
 jest.mock("../src/service/auth-service", () => {
     return {
