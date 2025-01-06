@@ -1,5 +1,5 @@
 import {GetSecretValueCommand, SecretsManagerClient} from "@aws-sdk/client-secrets-manager";
-import {getEnv, ServerError} from "@tcbenkhard/aws-utils";
+import {ServerError} from "@tcbenkhard/aws-utils";
 import {Cacheable} from "typescript-cacheable";
 
 export class SecretUtils {
@@ -18,7 +18,4 @@ export class SecretUtils {
         return publicKey.SecretString
     }
 }
-
-
-
 
