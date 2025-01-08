@@ -1,7 +1,7 @@
 import {b_cdk, b_dynamodb, b_lambda} from '@tcbenkhard/benkhard-cdk'
 import {Construct} from 'constructs';
 import {aws_apigateway, aws_dynamodb, aws_secretsmanager, aws_ssm} from "aws-cdk-lib";
-import {AccountPrincipal} from "aws-cdk-lib/aws-iam";
+import {AnyPrincipal} from "aws-cdk-lib/aws-iam";
 
 export class AuthBenkhardComStack extends b_cdk.Stack {
     constructor(scope: Construct, id: string) {
@@ -55,7 +55,7 @@ export class AuthBenkhardComStack extends b_cdk.Stack {
             environment
         })
 
-        authorizerHandler.grantInvoke(new AccountPrincipal(this.account))
+        authorizerHandler.grantInvoke(new AnyPrincipal())
 
         const apigw = new aws_apigateway.RestApi(this, 'ApiGateway', {
             restApiName: 'auth.benkhard.com',
