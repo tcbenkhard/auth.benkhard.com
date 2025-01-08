@@ -3,7 +3,7 @@ POST https://{{ base_url }}/register
 Content-Type: application/json
 
 {
-  "email": "tcbenkhard2@gmail.com",
+  "email": "tcbenkhard@gmail.com",
   "name": "Timo Benkhard",
   "password": "12345678"
 }
@@ -14,4 +14,4 @@ Authorization: Basic dGNiZW5raGFyZEBnbWFpbC5jb206MTIzNDU2Nzg=
 
 ### Get protected resource
 GET https://{{ base_url }}/oauth/secure
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsId5cCI6IkpXVCJ9.eyJpYXQiOjE3MzYxNjI1NDMsImV4cCI6MTczNjI0ODk0Mywic3ViIjoidGNiZW5raGFyZEBnbWFpbC5jb20ifQ.mqvDBFK5j88mnm-OTbFWb_C7v3nY3CkE47CDzVZvPgb7rbPH8aQimyNJCjYfsx-sM7aQ4WgUJWStVsAJYNZ8FLIkg2PJjQJVL5ZUPam51ENwGNaG-V3BvTPzlqJv8s7aq4aFZRJgn-t0kSIenhg3KmtYL1V6JU4V26xp8935ZojcaKgxzIHXAaDvI2Le7-724AT9R2yjZO76IGIWIn7aU8NcCATc_HWpzDUTTBHwfUYzQu9jc2NRFfmjDZ2WglcENPaUDp14lBTjFGyNyHu1cAvY1VXp7TVLco-UfH5z1X8j5VlV3-uxKBMUsyUd-cymZWMYFQY-UCNp2eRprEhYAA
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MzYzNjQwNzAsImV4cCI6MTczNjQ1MDQ3MCwic3ViIjoidGNiZW5raGFyZEBnbWFpbC5jb20ifQ.UjdnTuIHcLirncjDXUCERxHmmtDxWF9vHMNBCkHetYaDVgOvNLZcPnFFv_hJpcoKB20BxQJrjFaFRAcQ8MneIppb1JYZ6hqpx3XPcA0SXrnXjb52i-gQBPWa07QRpOhCgiRGSXb95JOmd63jGcCGyPPwBxZ2-jwigBebYZN5Jl4ztKfvtzr38OQhbhmMFAR0snhjxhW_FGoRekrHKm3iEsCcsN6bg3M2ojowftdf80c45THs_kezR_PDR-EyXyAe8be-9qg9aKRFAMPDt3SHWZS-gyoxhDm8olWMXrrXv-fk6dEN-D-BdaIuhQTabsGJynfBxfeG_oOLb4EFoK2dRw
